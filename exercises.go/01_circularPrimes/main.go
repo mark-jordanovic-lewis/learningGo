@@ -29,7 +29,7 @@ How many circular primes are there below one million?
 
 func primesBelowOneMillion() []int {
 	primes := []int{2, 3, 5, 7, 11, 15}
-	for i := 15; i <= 1000000000; i++ {
+	for i := 15; i <= 1000000; i++ {
 		if isPrime(&i, primes) {
 			primes = append(primes, i)
 		}
