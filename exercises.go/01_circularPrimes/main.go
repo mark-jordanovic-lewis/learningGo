@@ -28,9 +28,10 @@ How many circular primes are there below one million?
 }
 
 func primesBelowOneMillion() []int {
-	primes := []int{2, 3, 5, 7, 11, 15}
+	primes := make([]int, 0, 80000)
+	primes = append(primes, []int{3, 5, 7, 11, 13, 15, 17, 19}...)
 	for i := 15; i <= 1000000; i++ {
-		if isPrime(&i, &primes) {
+		if !(i%2 == 0) && isPrime(&i, &primes) {
 			primes = append(primes, i)
 		}
 	}
@@ -59,7 +60,8 @@ func contains(slice *[]int, i *int) bool {
 }
 
 func circularPrimes(knownPrimes *[]int) []int {
-	cPrimes := []int{2, 3, 5, 7, 11, 13, 17, 31, 37, 71, 73, 79, 97}
+	cPrimes := make([]int, 0, 60)
+	cPrimes = append(cPrimes, []int{2, 3, 5, 7, 11, 13, 17, 31, 37, 71, 73, 79, 97}...)
 	var containsEven bool
 	for _, prime := range *knownPrimes {
 		if contains(&cPrimes, &prime) {

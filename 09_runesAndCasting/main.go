@@ -5,7 +5,7 @@ import "fmt"
 func main() {
 	a := 'a'
 	fmt.Printf(
-		"a is of type %T, has value: %v, cast to rune has value: %v, cast to run has value: %v\n",
+		"a is of type %T, has value: %v, cast to rune has value: %v, cast to string has value: %v\n",
 		a, a, rune(a), string(a))
 	fmt.Println("Hello cast to bytes is:", []byte("Hello"))
 	fmt.Println("Hello as a list of runes is: [", 'H', 'e', 'l', 'l', 'o', "]")
