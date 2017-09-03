@@ -19,7 +19,7 @@ There are thirteen such primes below 100:
 How many circular primes are there below one million?
 `)
 	knownPrimes := primesBelowOneMillion()
-	cPrimes := circularPrimes(knownPrimes)
+	cPrimes := circularPrimes(&knownPrimes)
 	sort.Ints(cPrimes)
 	fmt.Println("Found these circular primes")
 	fmt.Println(cPrimes)
@@ -30,7 +30,7 @@ How many circular primes are there below one million?
 func primesBelowOneMillion() []int {
 	primes := []int{2, 3, 5, 7, 11, 15}
 	for i := 15; i <= 1000000; i++ {
-		if isPrime(&i, primes) {
+		if isPrime(&i, &primes) {
 			primes = append(primes, i)
 		}
 	}
@@ -38,9 +38,9 @@ func primesBelowOneMillion() []int {
 	return primes
 }
 
-func isPrime(i *int, knownPrimes []int) bool {
+func isPrime(i *int, knownPrimes *[]int) bool {
 	indivisible := true
-	for _, v := range knownPrimes {
+	for _, v := range *knownPrimes {
 		if *i%v == 0 {
 			indivisible = false
 			break
@@ -49,8 +49,8 @@ func isPrime(i *int, knownPrimes []int) bool {
 	return indivisible
 }
 
-func contains(slice []int, i *int) bool {
-	for _, v := range slice {
+func contains(slice *[]int, i *int) bool {
+	for _, v := range *slice {
 		if v == *i {
 			return true
 		}
@@ -58,11 +58,11 @@ func contains(slice []int, i *int) bool {
 	return false
 }
 
-func circularPrimes(knownPrimes []int) []int {
+func circularPrimes(knownPrimes *[]int) []int {
 	cPrimes := []int{2, 3, 5, 7, 11, 13, 17, 31, 37, 71, 73, 79, 97}
 	var containsEven bool
-	for _, prime := range knownPrimes {
-		if contains(cPrimes, &prime) {
+	for _, prime := range *knownPrimes {
+		if contains(&cPrimes, &prime) {
 			continue
 		}
 		rotations := []int{}
@@ -73,7 +73,7 @@ func circularPrimes(knownPrimes []int) []int {
 			switch {
 			case containsEven:
 				break AddToCPrimes
-			case current%2 == 0, !contains(knownPrimes, &current):
+			case !contains(knownPrimes, &current):
 				// fmt.Println("SHOULD BREAK OUT OF LOOP,", current, " NOT PRIME")
 				break AddToCPrimes
 			case (current == prime):
@@ -100,11 +100,11 @@ func rotateInt(i *int) (int, bool) {
 	}
 	j, _ := strconv.Atoi(rotatedString)
 
-	return j, hasEven(slice)
+	return j, hasEven(&slice)
 }
 
-func hasEven(ints []string) bool {
-	for _, v := range ints {
+func hasEven(ints *[]string) bool {
+	for _, v := range *ints {
 		x, _ := strconv.Atoi(v)
 		if x%2 == 0 {
 			return true
